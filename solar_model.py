@@ -19,10 +19,10 @@ def calculate_force(body, space_objects):
         if body == obj:
             continue  # тело не действует гравитационной силой на само себя!
         r = ((body.x - obj.x)**2 + (body.y - obj.y)**2)**0.5
-        r_x = (body.x - obj.x)**2
-        r_y = (body.y - obj.y)**2 
-        body.Fx += r_x * gravitational_constant * body.m*obj.m / r**3  # FIXME: need to check out      
-        body.Fy += r_y * gravitational_constant * body.m*obj.m / r**3  # FIXME: need to check out        
+        r_x = -(body.x - obj.x)
+        r_y = -(body.y - obj.y) 
+        body.Fx += r_x * gravitational_constant * obj.m / r**3  # FIXME: need to check out      
+        body.Fy += r_y * gravitational_constant * obj.m / r**3  # FIXME: need to check out        
 
 
 def move_space_object(body, dt):
@@ -32,16 +32,13 @@ def move_space_object(body, dt):
 
     **body** — тело, которое нужно переместить.
     """
+    
+    dt *= 10000
+    
+    ax = body.Fx
+    ay = body.Fy
 
-    try :
-        ax = body.Fx/body.m
-    except:
-        ax = 0
-    try:
-        ay = body.Fy/body.m
-    except:
-        ay = 0
-    body.x = body.x + body.Vx*dt + 0.5*ax*dt**2  # need to check out              
+    body.x = body.x + body.Vx*dt + 0.5*ax*dt**2               
     body.y = body.y + body.Vy*dt + 0.5*ay*dt**2  # FIXME: need to check out              
     body.Vx += ax*dt
     body.Vy += ay*dt

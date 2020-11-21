@@ -34,11 +34,14 @@ def execution():
     """
     global physical_time
     global displayed_time
+    global statistics_file_name
     recalculate_space_objects_positions(space_objects, time_step.get())
     for body in space_objects:
         update_object_position(space, body)
     physical_time += time_step.get()
     displayed_time.set("%.1f" % physical_time + " seconds gone")
+    
+    write_statistics_about_object_to_file(statistics_file_name, space_objects)
 
     if perform_execution:
         space.after(101 - int(time_speed.get()), execution)
@@ -111,13 +114,18 @@ def main():
     global time_speed
     global space
     global start_button
+    global statistics_file_name
+    
+    statistics_file_name = input("Enter name of file you want to save statistics to: ")
+    with open(statistics_file_name, 'w') as f:
+        f.close()
 
     print('Modelling started!')
     physical_time = 0
 
     root = tkinter.Tk()
     # космическое пространство отображается на холсте типа Canvas
-    space = tkinter.Canvas(root, width=window_width, height=window_height, bg="black")
+    space = tkinter.Canvas(root, width=window_width, height=window_height, bg='black')
     space.pack(side=tkinter.TOP)
     # нижняя панель с кнопками
     frame = tkinter.Frame(root)
@@ -125,7 +133,7 @@ def main():
 
     start_button = tkinter.Button(frame, text="Start", command=start_execution, width=6)
     start_button.pack(side=tkinter.LEFT)
-	
+
     time_step = tkinter.DoubleVar()
     time_step.set(1)
     time_step_entry = tkinter.Entry(frame, textvariable=time_step)
