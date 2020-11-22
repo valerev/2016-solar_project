@@ -15,7 +15,7 @@ def show_speed_of_time(filename, object_number : int):
                 if line[0] == "#":
                     counting_objects = False
                     if object_number<1 or object_number>=number_of_objects:
-                        print('Bad choice. No object with such serial number')
+                        print('Bad choice. No object with such serial number' + '\n')
                         return
                 else:
                     number_of_objects += 1
@@ -39,7 +39,7 @@ def show_speed_of_distance(filename, object_number_1 : int, object_number_2 : in
         counting_objects = True
         counter = 0
         if object_number_1==object_number_2:
-            print('Bad choice. You have selected same objects')
+            print('Bad choice. You have selected same objects' + '\n')
             return
         X = np.array([])
         Y = np.array([])
@@ -48,10 +48,10 @@ def show_speed_of_distance(filename, object_number_1 : int, object_number_2 : in
                 if line[0] == "#":
                     counting_objects = False
                     if object_number_1<1 or object_number_1>=number_of_objects:
-                        print('Bad choice. No object with such serial number')
+                        print('Bad choice. No object with such serial number' + '\n')
                         return
                     elif object_number_2<1 or object_number_2>=number_of_objects:
-                        print('Bad choice. No object with such serial number')
+                        print('Bad choice. No object with such serial number' + '\n')
                         return
                 else:
                     number_of_objects += 1
@@ -79,7 +79,7 @@ def show_distance_of_time(filename, object_number_1 : int, object_number_2 : int
         counting_objects = True
         counter = 0
         if object_number_1==object_number_2:
-            print('Bad choice. You have selected same objects')
+            print('Bad choice. You have selected same objects' + '\n')
             return
         X = np.array([])
         Y = np.array([])
@@ -88,10 +88,10 @@ def show_distance_of_time(filename, object_number_1 : int, object_number_2 : int
                 if line[0] == "#":
                     counting_objects = False
                     if object_number_1<1 or object_number_1>=number_of_objects:
-                        print('Bad choice. No object with such serial number')
+                        print('Bad choice. No object with such serial number' + '\n')
                         return
                     elif object_number_2<1 or object_number_2>=number_of_objects:
-                        print('Bad choice. No object with such serial number')
+                        print('Bad choice. No object with such serial number' + '\n')
                         return
                 else:
                     number_of_objects += 1
@@ -112,4 +112,34 @@ def show_distance_of_time(filename, object_number_1 : int, object_number_2 : int
 
 
 if __name__ == "__main__":
-    show_speed_of_distance('statistics', 1, 2)
+    choice = input('Please, choose which graph you want to see:' + '\n' \
+                    '1: graph of speed versus time' + '\n' \
+                    '2: graph of distance between two bodies versus time' + '\n' \
+                    '3: graph of spedd of body versus distance between this and another one' + '\n')
+    file_name = input('Write down name of file with statistics' + '\n')
+    if choice == '1':
+        try:
+            object_number = int(input('Choose serial number of observing object' + '\n'))
+        except:
+            print ('Write only integers as serial number' + '\n')
+        show_speed_of_time(file_name, object_number)
+    
+    elif choice == '2':
+        try:
+            object_number_1 = int(input('Choose serial number of first observing object' + '\n'))
+            object_number_2 = int(input('Choose serial number of second observing object' + '\n'))
+        except:
+            print ('Write only integers as serial numbers' + '\n')
+        show_distance_of_time(file_name, object_number_1, object_number_2)
+
+    elif choice == '3':
+        try:
+            object_number_1 = int(input('Choose serial number of first observing object' + '\n')) 
+            object_number_2 = int(input('Choose serial number of second observing object' + '\n'))
+        except:
+            print ('Write only integers as serial numbers' + '\n')
+        show_speed_of_distance(file_name, object_number_1, object_number_2)
+        
+
+
+    
